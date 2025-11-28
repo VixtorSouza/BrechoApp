@@ -1,0 +1,80 @@
+import React from 'react';
+import { View, Text, StyleSheet, Image, Button } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../types/navigation';
+import { useProducts } from '../context/ProductContext';
+
+type Props = NativeStackScreenProps<RootStackParamList, 'Details'>;
+
+const DetailsScreen = ({ route, navigation }: Props) => {
+  const { index } = route.params;
+  const { products, addToCart } = useProducts();
+  const product = products[index];
+
+  if (!product) {
+    return (
+      <View style={styles.container}>
+        <Text>Produto não encontrado</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      <Image 
+        source={{ uri: product.imgSrc }} 
+        style={styles.image} 
+        resizeMode="contain"
+      />
+      <Text style={styles.title}>{product.desc}</Text>
+      <Text style={styles.price}>R$ {product.valor.toFixed(2)}</Text>
+      <Text style={styles.details}>Tamanho: {product.tamanho}</Text>
+      <Text style={styles.details}>Tipo: {product.tipo}</Text>
+      <Text style={styles.details}>Estoque: {product.estoque} unidades</Text>
+      
+      <View style={styles.buttonContainer}>
+        <Button
+          title="Adicionar ao Carrinho"
+          onPress={() => {
+            addToCart(product);
+            navigation.navigate('Cart');
+          }}
+        />
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#fff',
+  },
+  image: {
+    width: '100%',
+    height: 300,
+    marginBottom: 16,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  price: {
+    fontSize: 20,
+    color: '#2ecc71',
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  details: {
+    fontSize: 16,
+    marginBottom: 8,
+    color: '#555',
+  },
+  buttonContainer: {
+    marginTop: 24,
+  },
+});
+
+export default DetailsScreen;

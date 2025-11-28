@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Brechó da Eliane</title>
+    <link rel="stylesheet" href="styles/style.css" />
+  </head>
+  <body>
+    <!-- Cabeçalho com Menu -->
+    <header>
+      <h1>Brechó da Eliane</h1>
+      <button id="menu-btn">☰</button>
+      <nav id="menu" class="hidden">
+        <ul>
+          <li data-section="login">🔐 Login / Cadastro</li>
+          <li data-section="catalogo">🏠 Catálogo</li>
+          <li data-section="cadastro">📦 Cadastrar Produto</li>
+          <li data-section="estoque">🧾 Controle de Estoque</li>
+          <li data-section="carrinho">🛒 Carrinho</li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <main>
+      <!-- Tela Login -->
+      <section id="login" class="tela ativa">
+        <h2>Login / Cadastro</h2>
+        <div class="form-container">
+          <input type="text" id="nome" placeholder="Nome" />
+          <input type="email" id="email" placeholder="E-mail" />
+          <input type="password" id="senha" placeholder="Senha" />
+          <button onclick="entrar()">Entrar</button>
+          <button onclick="cadastrarUsuario()">Cadastrar-se</button>
+        </div>
+      </section>
+
+      <!-- Tela Catálogo -->
+      <section id="catalogo" class="tela">
+        <h2>Catálogo de Produtos</h2>
+        <div id="produtos-lista" class="grid-produtos"></div>
+      </section>
+
+      <!-- Tela Detalhes do Produto -->
+      <section id="detalhes" class="tela">
+        <button onclick="voltarCatalogo()">← Voltar</button>
+        <div id="detalhes-container"></div>
+      </section>
+
+      <!-- Tela Cadastro Produto -->
+      <section id="cadastro" class="tela">
+        <h2>Cadastrar Novo Produto</h2>
+        <div class="form-container">
+          <input type="text" id="desc" placeholder="Descrição" />
+          <input type="number" id="valor" placeholder="Valor (R$)" />
+          <select id="tipo">
+            <option>Usado</option>
+            <option>Novo</option>
+          </select>
+          <input type="number" id="estoque" placeholder="Qtd Estoque" />
+          <input type="text" id="tamanho" placeholder="Tamanho" />
+          <input type="file" id="imagem" accept="image/*" />
+          <button onclick="cadastrarProduto()">Cadastrar</button>
+        </div>
+      </section>
+
+      <!-- Tela Controle de Estoque -->
+      <section id="estoque" class="tela">
+        <h2>Controle de Estoque</h2>
+        <div id="estoque-lista"></div>
+      </section>
+
+      <!-- Tela Carrinho -->
+      <section id="carrinho" class="tela">
+        <h2>Seu Carrinho</h2>
+        <div id="carrinho-itens"></div>
+        <h3 id="total"></h3>
+        <button onclick="finalizarPedido()">Finalizar Pedido</button>
+      </section>
+    </main>
+
+    <script src="scripts/app.js"></script>
+  </body>
+</html>

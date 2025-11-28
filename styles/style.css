@@ -1,0 +1,127 @@
+* {
+  box-sizing: border-box;
+  font-family: "Arial", sans-serif;
+}
+
+body {
+  margin: 0;
+  background-color: #fdfaff;
+  color: #333;
+}
+
+header {
+  background-color: #8b5cf6;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#menu-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+#menu {
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  background: #a78bfa;
+  border-radius: 8px;
+  display: none;
+  padding: 10px;
+}
+
+#menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#menu li {
+  padding: 8px;
+  cursor: pointer;
+  color: white;
+  border-bottom: 1px solid #dcd3ff;
+}
+
+#menu li:hover {
+  background: #7c3aed;
+}
+
+.hidden {
+  display: none;
+}
+
+main {
+  padding: 20px;
+}
+
+.tela {
+  display: none;
+}
+
+.tela.ativa {
+  display: block;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 300px;
+  margin: auto;
+}
+
+input,
+select,
+button {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button {
+  background-color: #8b5cf6;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #6d28d9;
+}
+
+.grid-produtos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.produto-card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+  background: #fff;
+}
+
+.produto-card img {
+  width: 100%;
+  border-radius: 6px;
+}
+
+#estoque-lista div,
+#carrinho-itens div {
+  background: #fff;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
