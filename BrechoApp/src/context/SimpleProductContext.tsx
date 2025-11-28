@@ -9,6 +9,7 @@ export interface Product {
   estoque: number;
   tamanho: string;
   imgSrc: string;
+  images?: string[]; // Array de imagens para carrossel
   status?: "disponivel" | "indisponivel" | "esgotado";
 }
 

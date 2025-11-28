@@ -13,7 +13,11 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.brecho.eliane"
+      "bundleIdentifier": "com.brecho.eliane",
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Este app precisa acessar sua galeria para selecionar imagens dos produtos.",
+        "NSCameraUsageDescription": "Este app precisa acessar sua câmera para tirar fotos dos produtos."
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -21,7 +25,12 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.brecho.eliane",
-      "versionCode": 1
+      "versionCode": 1,
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"

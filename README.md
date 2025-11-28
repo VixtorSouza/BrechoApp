@@ -2,6 +2,15 @@
 
 Aplicativo mobile para gerenciamento de brechó, desenvolvido para a Eliane Brechós.
 
+## 👥 Equipe e Responsabilidades
+
+### 🎯 Funções
+
+- **Victor**: Backend completo, arquitetura, integrações, entrega final ao cliente
+- **Brunelli**: Interface do usuário, telas de login, experiência visual
+- **Gustavo**: Interface do usuário, telas de login, componentes visuais
+- **Weslley**: Entrega, documentação, deploy e envio ao cliente
+
 ## 📋 Sobre o Projeto
 
 O **BrechoApp** é uma solução completa para gerenciamento de brechó, permitindo cadastrar produtos, gerenciar estoque, controlar vendas e oferecer uma experiência de compra intuitiva para os clientes. O aplicativo foi desenvolvido pensando em simplicidade e eficiência para pequenos e médios vendedores de roupas usadas.
@@ -157,4 +166,5 @@ Este projeto é privado e desenvolvido exclusivamente para a Eliane Brechós.
 
 ---
 
+"
 **Desenvolvido com ❤️ usando React Native + Expo**

@@ -60,21 +60,28 @@ export default function CartScreen() {
         <Text style={styles.itemName}>{item.desc}</Text>
         <Text style={styles.itemPrice}>R$ {item.valor.toFixed(2)}</Text>
         <Text style={styles.itemSize}>Tamanho: {item.tamanho}</Text>
-        <View style={styles.quantityControls}>
-          <TouchableOpacity
-            style={styles.quantityButton}
-            onPress={() => updateCartItemQuantity(item.id, item.quantity - 1)}
-          >
-            <Text style={styles.quantityButtonText}>-</Text>
-          </TouchableOpacity>
-          <Text style={styles.quantity}>{item.quantity}</Text>
-          <TouchableOpacity
-            style={styles.quantityButton}
-            onPress={() => updateCartItemQuantity(item.id, item.quantity + 1)}
-          >
-            <Text style={styles.quantityButtonText}>+</Text>
-          </TouchableOpacity>
-        </View>
+        <Text style={styles.itemQuantity}>Quantidade: {item.quantity}</Text>
+        <TouchableOpacity
+          style={styles.buyButton}
+          onPress={() => {
+            Alert.alert(
+              "Comprar Produto",
+              `Deseja confirmar a compra de ${item.desc}?`,
+              [
+                { text: "Cancelar", style: "cancel" },
+                {
+                  text: "Comprar",
+                  onPress: () => {
+                    removeFromCart(item.id);
+                    Alert.alert("Sucesso!", "Compra confirmada com sucesso!");
+                  },
+                },
+              ]
+            );
+          }}
+        >
+          <Text style={styles.buyButtonText}>Comprar</Text>
+        </TouchableOpacity>
       </View>
       <TouchableOpacity
         style={styles.removeButton}
@@ -190,6 +197,24 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     fontSize: 16,
     fontWeight: "bold",
+  },
+  itemQuantity: {
+    fontSize: 14,
+    color: "#666",
+    marginBottom: 8,
+  },
+  buyButton: {
+    backgroundColor: "#10b981",
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 6,
+    alignItems: "center",
+    marginTop: 8,
+  },
+  buyButtonText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 14,
   },
   removeButton: {
     justifyContent: "center",

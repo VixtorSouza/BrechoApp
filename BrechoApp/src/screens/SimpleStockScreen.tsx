@@ -17,6 +17,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types/navigation";
 import { useProducts, Product } from "../context/SimpleProductContext";
 import ImageUpload from "../components/ImageUpload";
+import { MultipleImageUpload } from "../components/MultipleImageUpload";
 
 export default function StockScreen() {
   const navigation =
@@ -33,6 +34,7 @@ export default function StockScreen() {
     estoque: "",
     tamanho: "",
     imgSrc: "",
+    images: [] as string[],
   });
 
   // Força atualização quando products mudar
@@ -59,6 +61,7 @@ export default function StockScreen() {
         estoque: product.estoque.toString(),
         tamanho: product.tamanho,
         imgSrc: product.imgSrc,
+        images: product.images || [product.imgSrc],
       });
     } else {
       setEditingProduct(null);
@@ -69,6 +72,7 @@ export default function StockScreen() {
         estoque: "",
         tamanho: "",
         imgSrc: "",
+        images: [],
       });
     }
     setModalVisible(true);
@@ -84,6 +88,7 @@ export default function StockScreen() {
       estoque: "",
       tamanho: "",
       imgSrc: "",
+      images: [] as string[],
     });
   };
 
@@ -151,8 +156,17 @@ export default function StockScreen() {
         estoque: parseInt(formData.estoque),
         tamanho: formData.tamanho.trim(),
         imgSrc:
-          formData.imgSrc ||
-          `https://picsum.photos/200/200?random=${Date.now()}`,
+          formData.images.length > 0
+            ? formData.images[0]
+            : formData.imgSrc ||
+              `https://picsum.photos/200/200?random=${Date.now()}`,
+        images:
+          formData.images.length > 0
+            ? formData.images
+            : [
+                formData.imgSrc ||
+                  `https://picsum.photos/200/200?random=${Date.now()}`,
+              ],
       };
 
       if (editingProduct) {
@@ -282,13 +296,13 @@ export default function StockScreen() {
               </Text>
 
               <View style={styles.imageContainer}>
-                <ImageUpload
-                  value={formData.imgSrc}
-                  onImageSelected={(uri) =>
-                    setFormData({ ...formData, imgSrc: uri })
+                <MultipleImageUpload
+                  value={formData.images}
+                  onImagesSelected={(images) =>
+                    setFormData({ ...formData, images })
                   }
-                  placeholder="Imagem do produto"
-                  size={120}
+                  placeholder="Imagens do produto"
+                  maxImages={5}
                 />
               </View>
 

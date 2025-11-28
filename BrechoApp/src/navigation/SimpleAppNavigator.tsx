@@ -13,9 +13,9 @@ import {
 } from "react-native";
 
 // Screens
-import CatalogScreen from "../screens/CatalogScreen";
+import ModernCatalogScreen from "../screens/ModernCatalogScreen";
 import SimpleCartScreen from "../screens/SimpleCartScreen";
-import ProductDetailScreen from "../screens/ProductDetailScreen";
+import ModernProductDetailScreen from "../screens/ModernProductDetailScreen";
 import SimpleAddProductScreen from "../screens/SimpleAddProductScreen";
 import SimpleStockScreen from "../screens/SimpleStockScreen";
 import SimpleCheckoutScreen from "../screens/SimpleCheckoutScreen";
@@ -38,7 +38,6 @@ type TabParamList = {
   Catalog: undefined;
   Search: undefined;
   Cart: undefined;
-  Favorites: undefined;
   Stock: undefined;
 };
 
@@ -61,9 +60,6 @@ function MainTabs() {
               break;
             case "Cart":
               iconName = focused ? "cart" : "cart-outline";
-              break;
-            case "Favorites":
-              iconName = focused ? "heart" : "heart-outline";
               break;
             case "Stock":
               iconName = focused ? "list" : "list-outline";
@@ -88,7 +84,7 @@ function MainTabs() {
     >
       <Tab.Screen
         name="Catalog"
-        component={CatalogScreen}
+        component={ModernCatalogScreen}
         options={{ title: "Início" }}
       />
       <Tab.Screen
@@ -100,11 +96,6 @@ function MainTabs() {
         name="Cart"
         component={SimpleCartScreen}
         options={{ title: "Carrinho" }}
-      />
-      <Tab.Screen
-        name="Favorites"
-        component={SimpleFavoritesScreen}
-        options={{ title: "Favoritos" }}
       />
       <Tab.Screen
         name="Stock"
@@ -160,7 +151,7 @@ export default function SimpleAppNavigator() {
         />
         <Stack.Screen
           name="ProductDetail"
-          component={ProductDetailScreen}
+          component={ModernProductDetailScreen}
           options={({ route }) => ({
             title: "Detalhes do Produto",
             headerBackTitle: "Voltar",
