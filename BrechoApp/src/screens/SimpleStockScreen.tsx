@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -25,7 +25,7 @@ export default function StockScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(false);
-  const [refreshKey, setRefreshKey] = useState(0); // Força refresh da lista
+  const [forceUpdate, setForceUpdate] = useState(0);
   const [formData, setFormData] = useState({
     desc: "",
     valor: "",
@@ -34,6 +34,20 @@ export default function StockScreen() {
     tamanho: "",
     imgSrc: "",
   });
+
+  // Força atualização quando products mudar
+  useEffect(() => {
+    console.log("Products atualizados:", products.length);
+    console.log(
+      "Products IDs:",
+      products.map((p) => p.id)
+    );
+    setForceUpdate((prev) => prev + 1);
+  }, [products]);
+
+  // Log inicial
+  console.log("=== StockScreen renderizado ===");
+  console.log("Products atuais:", products.length);
 
   const openModal = (product?: Product) => {
     if (product) {
@@ -83,12 +97,17 @@ export default function StockScreen() {
     if (!formData.valor.trim()) {
       errors.push("Preço é obrigatório");
     } else {
-      // Remove caracteres não numéricos, exceto ponto e vírgula
+      // Remove tudo exceto números e ponto/vírgula
       const cleanValor = formData.valor.replace(/[^\d.,-]/g, "");
-      const valorNumerico = parseFloat(cleanValor.replace(",", "."));
+
+      // Converte vírgula para ponto para padronização
+      const valorPadronizado = cleanValor.replace(",", ".");
+      const valorNumerico = parseFloat(valorPadronizado);
 
       if (isNaN(valorNumerico) || valorNumerico <= 0) {
-        errors.push("Preço deve ser um número maior que 0 (ex: 10.50)");
+        errors.push(
+          "Preço deve ser um número maior que 0 (ex: 10.50 ou 1000000)"
+        );
       } else if (valorNumerico > 999999999.99) {
         errors.push("Preço muito alto. Use um valor menor que 1.000.000.000");
       }
@@ -122,7 +141,8 @@ export default function StockScreen() {
     try {
       // Converte o valor de forma segura
       const cleanValor = formData.valor.replace(/[^\d.,-]/g, "");
-      const valorNumerico = parseFloat(cleanValor.replace(",", "."));
+      const valorPadronizado = cleanValor.replace(",", ".");
+      const valorNumerico = parseFloat(valorPadronizado);
 
       const productData = {
         desc: formData.desc.trim(),
@@ -156,26 +176,26 @@ export default function StockScreen() {
   };
 
   const handleDelete = (product: Product) => {
-    Alert.alert("Confirmar Exclusão", `Deseja excluir "${product.desc}"?`, [
-      { text: "Cancelar", style: "cancel" },
-      {
-        text: "Excluir",
-        style: "destructive",
-        onPress: async () => {
-          try {
-            await removeProduct(product.id);
-            setRefreshKey((prev) => prev + 1);
-            Alert.alert("Sucesso", "Produto excluído com sucesso");
-          } catch (error) {
-            console.error("Erro ao excluir produto:", error);
-            Alert.alert(
-              "Erro",
-              "Não foi possível excluir o produto. Tente novamente."
-            );
-          }
-        },
-      },
-    ]);
+    console.log(
+      "Iniciando exclusão do produto:",
+      product.desc,
+      "ID:",
+      product.id
+    );
+
+    console.log("=== TESTE DIRETO SEM ALERT ===");
+    console.log("Chamando removeProduct diretamente...");
+
+    removeProduct(product.id)
+      .then(() => {
+        console.log("=== EXCLUSÃO DIRETA BEM SUCEDIDA ===");
+        Alert.alert("Sucesso", "Produto excluído com sucesso");
+        setForceUpdate((prev) => prev + 1);
+      })
+      .catch((error) => {
+        console.error("=== ERRO NA EXCLUSÃO DIRETA ===", error);
+        Alert.alert("Erro", "Não foi possível excluir o produto");
+      });
   };
 
   const formatPrice = (price: number): string => {
@@ -245,7 +265,7 @@ export default function StockScreen() {
         keyExtractor={(item) => item.id}
         renderItem={renderProduct}
         contentContainerStyle={{ paddingBottom: 20 }}
-        extraData={refreshKey}
+        extraData={forceUpdate}
       />
 
       <Modal
@@ -283,7 +303,7 @@ export default function StockScreen() {
 
               <TextInput
                 style={styles.input}
-                placeholder="Preço"
+                placeholder="Preço (ex: 10.50 ou 1000000)"
                 value={formData.valor}
                 onChangeText={(text) =>
                   setFormData({ ...formData, valor: text })

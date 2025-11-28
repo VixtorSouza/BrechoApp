@@ -211,30 +211,49 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const removeProduct = async (id: string) => {
     try {
-      // First remove from cart if it exists
-      const cartItemsToRemove = cart.filter((item) => item.id === id);
-      if (cartItemsToRemove.length > 0) {
-        const updatedCart = cart.filter((item) => item.id !== id);
-        await saveCart(updatedCart);
+      console.log("=== INICIANDO EXCLUSÃO ===");
+      console.log("ID recebido:", id);
+      console.log(
+        "Produtos atuais:",
+        products.map((p) => ({ id: p.id, desc: p.desc }))
+      );
+
+      // Verificar se produto existe
+      const productIndex = products.findIndex((p) => p.id === id);
+      console.log("Índice do produto:", productIndex);
+
+      if (productIndex === -1) {
+        throw new Error(`Produto com ID ${id} não encontrado`);
       }
 
-      // Then remove from products
-      const updatedProducts = products.filter((product) => product.id !== id);
+      // Criar nova lista sem o produto
+      const newProducts = [...products];
+      newProducts.splice(productIndex, 1);
+      console.log("Produtos após remoção:", newProducts.length);
 
-      if (updatedProducts.length === products.length) {
-        throw new Error("Produto não encontrado");
-      }
-
-      // Force update the state immediately
-      setProducts(updatedProducts);
-
-      // Then save to storage
+      // Salvar no storage
       await AsyncStorage.setItem(
         "@BrechoApp:products",
-        JSON.stringify(updatedProducts)
+        JSON.stringify(newProducts)
+      );
+
+      // Atualizar estado imediatamente
+      setProducts(newProducts);
+
+      // Remover do carrinho se existir
+      const newCart = cart.filter((item) => item.id !== id);
+      if (newCart.length !== cart.length) {
+        await AsyncStorage.setItem("@BrechoApp:cart", JSON.stringify(newCart));
+        setCart(newCart);
+      }
+
+      console.log("=== EXCLUSÃO CONCLUÍDA COM SUCESSO ===");
+      console.log(
+        "Produtos finais:",
+        newProducts.map((p) => ({ id: p.id, desc: p.desc }))
       );
     } catch (error) {
-      console.error("Erro ao remover produto:", error);
+      console.error("=== ERRO NA EXCLUSÃO ===", error);
       throw error;
     }
   };
