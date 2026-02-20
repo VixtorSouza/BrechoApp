@@ -143,22 +143,6 @@ BrechoApp/
    - Configurar integração com Supabase
    - Criar serviços em `src/services/`
 
-## 💡 Detalhes Interessantes
-
-- **Arquitetura Modular**: O projeto usa uma estrutura limpa com separação clara entre telas, componentes e contextos
-- **Multiplataforma Nativa**: Desenvolvido com React Native para performance nativa em iOS e Android
-- **Offline First**: Utiliza Async Storage para funcionalidades básicas offline
-- **Validação Robusta**: Implementação com Yup e React Hook Form para formulários seguros
-- **Gestos Fluidos**: Integração com Gesture Handler e Reanimated para UX moderna
-
-## 🚧 Próximos Passos Sugeridos
-
-- [ ] Implementar autenticação completa
-- [ ] Integrar com gateway de pagamento
-- [ ] Adicionar sistema de avaliações
-- [ ] Implementar notificações push
-- [ ] Otimizar performance e cache
-- [ ] Adicionar testes automatizados
 
 ## 📱 Licença
 
